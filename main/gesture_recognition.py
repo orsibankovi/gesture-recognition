@@ -19,7 +19,7 @@ class GestureRecognition():
             self.result = result
 
         options = GestureRecognizerOptions(
-            base_options=BaseOptions(model_asset_path='./gesture_recognizer.task'),
+            base_options=BaseOptions(model_asset_path='./gesture-recognition/custom_gesture_recognizer.task'),
             running_mode=VisionRunningMode.LIVE_STREAM,
             result_callback=update_result)
         
@@ -31,7 +31,12 @@ class GestureRecognition():
         multi_hand_landmarks_list = [multi_hand_landmarks for (_, multi_hand_landmarks) in results]
 
         # Display gestures and hand landmarks.
-        label = f"{gestures[0].category_name} ({gestures[0].score:.2f})"
+        if gestures[0].category_name == '':
+            x = "None"
+            label = f"{x} ({gestures[0].score:.2f})"
+        else:
+            label = f"{gestures[0].category_name} ({gestures[0].score:.2f})"
+
         annotated_image = image.copy()
 
         for multihand_landmarks in multi_hand_landmarks_list:
